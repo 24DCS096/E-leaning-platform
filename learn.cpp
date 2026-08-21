@@ -4,308 +4,334 @@
 #include <iomanip>
 using namespace std;
 
-/*
-    LearnHub - E-Learning Platform
-    learn.cpp
-
-    This program demonstrates basic backend/course
-    management logic for the E-Learning Platform.
-*/
+/* =====================================================
+   LEARNHUB - E-LEARNING PLATFORM
+   learn.cpp
+   ===================================================== */
 
 struct Course {
     int id;
     string name;
     string category;
-    string level;
     int lessons;
-    int duration;
-    double price;
+    double rating;
 };
 
 struct Student {
-    int id;
     string name;
     string email;
     vector<int> enrolledCourses;
 };
 
-
-/* ================= COURSE DATA ================= */
-
 vector<Course> courses = {
-
-    {1, "Complete HTML & CSS",
-     "Web Development", "Beginner",
-     25, 8, 0},
-
-    {2, "Python Programming",
-     "Programming", "Beginner",
-     40, 15, 0},
-
-    {3, "Java Programming",
-     "Programming", "Intermediate",
-     35, 14, 499},
-
-    {4, "Database Management",
-     "Database", "Intermediate",
-     30, 12, 399},
-
-    {5, "C++ Programming",
-     "Programming", "Intermediate",
-     32, 13, 399},
-
-    {6, "JavaScript Masterclass",
-     "Web Development", "Intermediate",
-     38, 16, 599}
+    {1, "Full Stack Web Development", "Web Development", 25, 4.8},
+    {2, "Python Programming", "Programming", 30, 4.9},
+    {3, "Data Science Fundamentals", "Data Science", 28, 4.7},
+    {4, "Database Management", "Database", 24, 4.8},
+    {5, "Cyber Security Basics", "Cybersecurity", 22, 4.6},
+    {6, "Artificial Intelligence", "AI & ML", 32, 4.9}
 };
 
 
-/* ================= DISPLAY COURSE ================= */
+/* ================= DISPLAY COURSES ================= */
 
-void displayCourse(const Course& course) {
+void displayCourses() {
 
-    cout << "\n----------------------------------------\n";
+    cout << "\n============================================================\n";
+    cout << "                    AVAILABLE COURSES\n";
+    cout << "============================================================\n";
 
-    cout << "Course ID     : " << course.id << endl;
-    cout << "Course Name   : " << course.name << endl;
-    cout << "Category      : " << course.category << endl;
-    cout << "Level         : " << course.level << endl;
-    cout << "Lessons       : " << course.lessons << endl;
-    cout << "Duration      : " << course.duration << " Hours" << endl;
+    cout << left
+         << setw(5) << "ID"
+         << setw(32) << "Course"
+         << setw(20) << "Category"
+         << setw(10) << "Lessons"
+         << setw(10) << "Rating"
+         << endl;
 
-    if (course.price == 0) {
-        cout << "Price         : Free" << endl;
-    } else {
-        cout << "Price         : Rs. "
-             << fixed << setprecision(2)
-             << course.price << endl;
+    cout << "------------------------------------------------------------\n";
+
+    for (const Course &course : courses) {
+
+        cout << left
+             << setw(5) << course.id
+             << setw(32) << course.name
+             << setw(20) << course.category
+             << setw(10) << course.lessons
+             << setw(10) << course.rating
+             << endl;
     }
 
-    cout << "----------------------------------------\n";
-}
-
-
-/* ================= DISPLAY ALL COURSES ================= */
-
-void displayAllCourses() {
-
-    cout << "\n========================================\n";
-    cout << "          AVAILABLE COURSES\n";
-    cout << "========================================\n";
-
-    for (const Course& course : courses) {
-        displayCourse(course);
-    }
-}
-
-
-/* ================= SEARCH COURSE ================= */
-
-void searchCourse() {
-
-    string keyword;
-
-    cout << "\nEnter course name or category: ";
-    cin.ignore();
-    getline(cin, keyword);
-
-    bool found = false;
-
-    for (const Course& course : courses) {
-
-        string courseName = course.name;
-        string category = course.category;
-
-        if (
-            courseName.find(keyword) != string::npos ||
-            category.find(keyword) != string::npos
-        ) {
-
-            displayCourse(course);
-            found = true;
-        }
-    }
-
-    if (!found) {
-        cout << "\nNo course found.\n";
-    }
+    cout << "============================================================\n";
 }
 
 
 /* ================= FIND COURSE ================= */
 
-int findCourse(int courseId) {
+Course* findCourse(int courseId) {
 
-    for (int i = 0; i < courses.size(); i++) {
+    for (auto &course : courses) {
 
-        if (courses[i].id == courseId) {
-            return i;
+        if (course.id == courseId) {
+            return &course;
         }
     }
 
-    return -1;
+    return nullptr;
 }
 
 
-/* ================= ENROLL STUDENT ================= */
+/* ================= ENROLL COURSE ================= */
 
-void enrollStudent(Student& student) {
+void enrollCourse(Student &student) {
+
+    displayCourses();
 
     int courseId;
 
     cout << "\nEnter Course ID to enroll: ";
     cin >> courseId;
 
-    int index = findCourse(courseId);
+    Course* course = findCourse(courseId);
 
-    if (index == -1) {
+    if (course == nullptr) {
 
         cout << "\nInvalid Course ID.\n";
         return;
     }
 
+
     for (int id : student.enrolledCourses) {
 
         if (id == courseId) {
 
-            cout << "\nYou are already enrolled in this course.\n";
+            cout << "\nYou are already enrolled in "
+                 << course->name << ".\n";
+
             return;
         }
     }
 
+
     student.enrolledCourses.push_back(courseId);
 
-    cout << "\n========================================\n";
-    cout << "       ENROLLMENT SUCCESSFUL\n";
-    cout << "========================================\n";
-
-    cout << "Student : " << student.name << endl;
-    cout << "Course  : " << courses[index].name << endl;
-
-    if (courses[index].price == 0) {
-        cout << "Payment : Free\n";
-    } else {
-        cout << "Amount  : Rs. "
-             << courses[index].price << endl;
-    }
-
-    cout << "========================================\n";
+    cout << "\nSuccessfully enrolled in: "
+         << course->name << endl;
 }
 
 
 /* ================= MY COURSES ================= */
 
-void displayMyCourses(const Student& student) {
+void displayMyCourses(const Student &student) {
 
-    cout << "\n========================================\n";
-    cout << "             MY COURSES\n";
-    cout << "========================================\n";
+    cout << "\n============================================================\n";
+    cout << "                       MY COURSES\n";
+    cout << "============================================================\n";
 
     if (student.enrolledCourses.empty()) {
 
-        cout << "\nYou have not enrolled in any course yet.\n";
+        cout << "You have not enrolled in any courses yet.\n";
         return;
     }
 
+
     for (int courseId : student.enrolledCourses) {
 
-        int index = findCourse(courseId);
+        Course* course = findCourse(courseId);
 
-        if (index != -1) {
+        if (course != nullptr) {
 
-            cout << "\nCourse ID : "
-                 << courses[index].id << endl;
-
-            cout << "Course    : "
-                 << courses[index].name << endl;
-
-            cout << "Category  : "
-                 << courses[index].category << endl;
-
-            cout << "Progress  : 0%\n";
-
-            cout << "----------------------------------------\n";
+            cout << "\nCourse ID : " << course->id;
+            cout << "\nCourse    : " << course->name;
+            cout << "\nCategory  : " << course->category;
+            cout << "\nLessons   : " << course->lessons;
+            cout << "\nRating    : " << course->rating;
+            cout << "\nProgress  : 0%";
+            cout << "\n-----------------------------\n";
         }
     }
 }
 
 
-/* ================= COURSE PROGRESS ================= */
+/* ================= QUIZ ================= */
 
-void showProgress(const Student& student) {
+void startQuiz() {
 
-    cout << "\n========================================\n";
-    cout << "          LEARNING PROGRESS\n";
-    cout << "========================================\n";
+    int score = 0;
+    char answer;
 
-    if (student.enrolledCourses.empty()) {
+    cout << "\n============================================================\n";
+    cout << "                     LEARNHUB QUIZ\n";
+    cout << "============================================================\n";
 
-        cout << "\nNo enrolled courses.\n";
-        return;
+
+    cout << "\n1. Which language is mainly used to structure web pages?";
+    cout << "\nA. HTML";
+    cout << "\nB. C++";
+    cout << "\nC. Python";
+    cout << "\nD. SQL";
+    cout << "\nAnswer: ";
+
+    cin >> answer;
+
+    if (answer == 'A' || answer == 'a') {
+        score++;
     }
 
-    int progress = 0;
 
-    for (int courseId : student.enrolledCourses) {
+    cout << "\n2. Which language is commonly used for database queries?";
+    cout << "\nA. HTML";
+    cout << "\nB. SQL";
+    cout << "\nC. CSS";
+    cout << "\nD. JavaScript";
+    cout << "\nAnswer: ";
 
-        int index = findCourse(courseId);
+    cin >> answer;
 
-        if (index != -1) {
-
-            cout << "\n"
-                 << courses[index].name
-                 << " : ";
-
-            cout << progress << "%";
-
-            cout << "\n";
-        }
+    if (answer == 'B' || answer == 'b') {
+        score++;
     }
 
-    cout << "\nComplete lessons to increase your progress.\n";
+
+    cout << "\n3. What does AI stand for?";
+    cout << "\nA. Automated Internet";
+    cout << "\nB. Artificial Intelligence";
+    cout << "\nC. Advanced Interface";
+    cout << "\nD. Application Integration";
+    cout << "\nAnswer: ";
+
+    cin >> answer;
+
+    if (answer == 'B' || answer == 'b') {
+        score++;
+    }
+
+
+    cout << "\n4. Which language is represented by the Python logo?";
+    cout << "\nA. Python";
+    cout << "\nB. Java";
+    cout << "\nC. C";
+    cout << "\nD. PHP";
+    cout << "\nAnswer: ";
+
+    cin >> answer;
+
+    if (answer == 'A' || answer == 'a') {
+        score++;
+    }
+
+
+    cout << "\n5. CSS is mainly used for:";
+    cout << "\nA. Database management";
+    cout << "\nB. Web page styling";
+    cout << "\nC. Operating systems";
+    cout << "\nD. Data storage";
+    cout << "\nAnswer: ";
+
+    cin >> answer;
+
+    if (answer == 'B' || answer == 'b') {
+        score++;
+    }
+
+
+    cout << "\n============================================================\n";
+
+    cout << "Quiz Completed!\n";
+    cout << "Your Score: " << score << " / 5\n";
+
+
+    if (score == 5) {
+
+        cout << "Excellent! Outstanding performance.\n";
+
+    }
+    else if (score >= 3) {
+
+        cout << "Good job! Keep learning.\n";
+
+    }
+    else {
+
+        cout << "Keep practicing and try again.\n";
+
+    }
+
+    cout << "============================================================\n";
 }
 
 
 /* ================= STUDENT PROFILE ================= */
 
-void displayProfile(const Student& student) {
+void displayProfile(const Student &student) {
 
-    cout << "\n========================================\n";
-    cout << "           STUDENT PROFILE\n";
-    cout << "========================================\n";
+    cout << "\n============================================================\n";
+    cout << "                    STUDENT PROFILE\n";
+    cout << "============================================================\n";
 
-    cout << "Student ID     : " << student.id << endl;
-    cout << "Student Name   : " << student.name << endl;
-    cout << "Email          : " << student.email << endl;
+    cout << "\nName  : " << student.name;
+    cout << "\nEmail : " << student.email;
+    cout << "\nCourses Enrolled : "
+         << student.enrolledCourses.size();
 
-    cout << "Courses Taken  : "
-         << student.enrolledCourses.size()
-         << endl;
-
-    cout << "========================================\n";
+    cout << "\n============================================================\n";
 }
 
 
 /* ================= MAIN MENU ================= */
 
-void showMenu() {
+void showMenu(Student &student) {
 
-    cout << "\n\n";
-    cout << "========================================\n";
-    cout << "             LEARNHUB\n";
-    cout << "        E-LEARNING PLATFORM\n";
-    cout << "========================================\n";
+    int choice;
 
-    cout << "1. View All Courses\n";
-    cout << "2. Search Course\n";
-    cout << "3. Enroll in Course\n";
-    cout << "4. My Courses\n";
-    cout << "5. Learning Progress\n";
-    cout << "6. Student Profile\n";
-    cout << "7. Exit\n";
+    do {
 
-    cout << "========================================\n";
-    cout << "Enter your choice: ";
+        cout << "\n\n============================================================\n";
+        cout << "                 LEARNHUB E-LEARNING\n";
+        cout << "============================================================\n";
+
+        cout << "\n1. View All Courses";
+        cout << "\n2. Enroll in Course";
+        cout << "\n3. My Courses";
+        cout << "\n4. Start Quiz";
+        cout << "\n5. Student Profile";
+        cout << "\n6. Exit";
+
+        cout << "\n\nEnter your choice: ";
+        cin >> choice;
+
+
+        switch (choice) {
+
+            case 1:
+                displayCourses();
+                break;
+
+            case 2:
+                enrollCourse(student);
+                break;
+
+            case 3:
+                displayMyCourses(student);
+                break;
+
+            case 4:
+                startQuiz();
+                break;
+
+            case 5:
+                displayProfile(student);
+                break;
+
+            case 6:
+                cout << "\nThank you for using LearnHub!\n";
+                break;
+
+            default:
+                cout << "\nInvalid choice. Please try again.\n";
+        }
+
+    } while (choice != 6);
 }
 
 
@@ -315,84 +341,23 @@ int main() {
 
     Student student;
 
-    student.id = 1001;
-    student.name = "Student";
-    student.email = "student@example.com";
-
-    int choice;
-
-    cout << "\n";
-    cout << "========================================\n";
-    cout << "       WELCOME TO LEARNHUB\n";
-    cout << "========================================\n";
-
-    do {
-
-        showMenu();
-
-        cin >> choice;
-
-        switch (choice) {
-
-            case 1:
-
-                displayAllCourses();
-
-                break;
+    cout << "============================================================\n";
+    cout << "             WELCOME TO LEARNHUB\n";
+    cout << "             E-LEARNING PLATFORM\n";
+    cout << "============================================================\n";
 
 
-            case 2:
-
-                searchCourse();
-
-                break;
+    cout << "\nEnter Student Name: ";
+    getline(cin, student.name);
 
 
-            case 3:
-
-                displayAllCourses();
-
-                enrollStudent(student);
-
-                break;
+    cout << "Enter Student Email: ";
+    getline(cin, student.email);
 
 
-            case 4:
+    cout << "\nRegistration successful!\n";
 
-                displayMyCourses(student);
-
-                break;
-
-
-            case 5:
-
-                showProgress(student);
-
-                break;
-
-
-            case 6:
-
-                displayProfile(student);
-
-                break;
-
-
-            case 7:
-
-                cout << "\nThank you for using LearnHub!\n";
-                cout << "Keep Learning. Keep Growing. 🚀\n";
-
-                break;
-
-
-            default:
-
-                cout << "\nInvalid choice."
-                     << " Please try again.\n";
-        }
-
-    } while (choice != 7);
+    showMenu(student);
 
     return 0;
 }

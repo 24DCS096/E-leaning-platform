@@ -1,618 +1,750 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LearnHub - E-Learning Platform</title>
+    <title>LearnHub | E-Learning Platform</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
-    <header class="navbar">
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
         <div class="logo">
-            <span>📚</span> LearnHub
+            <span>📚</span>
+            <h2>LearnHub</h2>
         </div>
 
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#courses">Courses</a>
-            <a href="#features">Features</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+        <div class="profile-mini">
+            <div class="profile-avatar">👨‍🎓</div>
+            <div>
+                <h4 id="sidebarUserName">Student</h4>
+                <p>Student Account</p>
+            </div>
+        </div>
+
+        <nav class="side-menu">
+
+            <a href="#dashboard" class="menu-item active"
+               onclick="showSection('dashboard', this)">
+                <span>🏠</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#courses" class="menu-item"
+               onclick="showSection('courses', this)">
+                <span>📚</span>
+                <span>My Courses</span>
+            </a>
+
+            <a href="#explore" class="menu-item"
+               onclick="showSection('explore', this)">
+                <span>🔍</span>
+                <span>Explore Courses</span>
+            </a>
+
+            <a href="#progress" class="menu-item"
+               onclick="showSection('progress', this)">
+                <span>📈</span>
+                <span>My Progress</span>
+            </a>
+
+            <a href="#quiz" class="menu-item"
+               onclick="showSection('quiz', this)">
+                <span>📝</span>
+                <span>Quizzes</span>
+            </a>
+
+            <a href="#certificate" class="menu-item"
+               onclick="showSection('certificate', this)">
+                <span>🎓</span>
+                <span>Certificates</span>
+            </a>
+
+            <a href="#profile" class="menu-item"
+               onclick="showSection('profile', this)">
+                <span>👤</span>
+                <span>My Profile</span>
+            </a>
+
+            <a href="#settings" class="menu-item"
+               onclick="showSection('settings', this)">
+                <span>⚙️</span>
+                <span>Settings</span>
+            </a>
+
         </nav>
 
-        <div class="nav-buttons">
-            <button onclick="openLogin()">Login</button>
-            <button class="signup-btn" onclick="openSignup()">Sign Up</button>
-        </div>
-    </header>
-
-
-    <!-- ================= HERO SECTION ================= -->
-    <section class="hero" id="home">
-
-        <div class="hero-content">
-            <p class="welcome">WELCOME TO LEARNHUB</p>
-
-            <h1>
-                Learn Today,<br>
-                <span>Lead Tomorrow.</span>
-            </h1>
-
-            <p>
-                Explore high-quality courses, improve your skills,
-                track your learning progress and achieve your goals
-                with our modern e-learning platform.
-            </p>
-
-            <div class="hero-buttons">
-                <button class="primary-btn" onclick="scrollToCourses()">
-                    Explore Courses
-                </button>
-
-                <button class="secondary-btn" onclick="openSignup()">
-                    Get Started
-                </button>
-            </div>
-        </div>
-
-        <div class="hero-image">
-            <img src="learn.jpg" alt="Online Learning">
-        </div>
-
-    </section>
-
-
-    <!-- ================= SEARCH ================= -->
-    <section class="search-section">
-
-        <h2>Find Your Perfect Course</h2>
-
-        <p>Search from our wide range of learning programs.</p>
-
-        <div class="search-box">
-            <input
-                type="text"
-                id="courseSearch"
-                placeholder="Search courses..."
-                onkeyup="searchCourses()"
-            >
-
-            <button onclick="searchCourses()">🔍 Search</button>
-        </div>
-
-    </section>
-
-
-    <!-- ================= COURSES ================= -->
-    <section class="courses-section" id="courses">
-
-        <div class="section-title">
-            <p>LEARN & GROW</p>
-            <h2>Popular Courses</h2>
-            <span>
-                Choose from our most popular courses and start learning today.
-            </span>
-        </div>
-
-        <div class="course-container" id="courseContainer">
-
-            <!-- Course 1 -->
-            <div class="course-card" data-course="web development">
-
-                <div class="course-icon">💻</div>
-
-                <div class="course-content">
-                    <span class="category">Web Development</span>
-
-                    <h3>Full Stack Web Development</h3>
-
-                    <p>
-                        Learn HTML, CSS, JavaScript and modern web
-                        development techniques.
-                    </p>
-
-                    <div class="course-info">
-                        <span>⭐ 4.8</span>
-                        <span>📚 25 Lessons</span>
-                    </div>
-
-                    <button onclick="enrollCourse('Full Stack Web Development')">
-                        Enroll Now
-                    </button>
-                </div>
-
-            </div>
-
-
-            <!-- Course 2 -->
-            <div class="course-card" data-course="python programming">
-
-                <div class="course-icon">🐍</div>
-
-                <div class="course-content">
-                    <span class="category">Programming</span>
-
-                    <h3>Python Programming</h3>
-
-                    <p>
-                        Learn Python from basics to advanced concepts
-                        through practical examples.
-                    </p>
-
-                    <div class="course-info">
-                        <span>⭐ 4.9</span>
-                        <span>📚 30 Lessons</span>
-                    </div>
-
-                    <button onclick="enrollCourse('Python Programming')">
-                        Enroll Now
-                    </button>
-                </div>
-
-            </div>
-
-
-            <!-- Course 3 -->
-            <div class="course-card" data-course="data science">
-
-                <div class="course-icon">📊</div>
-
-                <div class="course-content">
-                    <span class="category">Data Science</span>
-
-                    <h3>Data Science Fundamentals</h3>
-
-                    <p>
-                        Understand data analysis, visualization and
-                        fundamental data science concepts.
-                    </p>
-
-                    <div class="course-info">
-                        <span>⭐ 4.7</span>
-                        <span>📚 28 Lessons</span>
-                    </div>
-
-                    <button onclick="enrollCourse('Data Science Fundamentals')">
-                        Enroll Now
-                    </button>
-                </div>
-
-            </div>
-
-
-            <!-- Course 4 -->
-            <div class="course-card" data-course="database management">
-
-                <div class="course-icon">🗄️</div>
-
-                <div class="course-content">
-                    <span class="category">Database</span>
-
-                    <h3>Database Management</h3>
-
-                    <p>
-                        Learn SQL, database design, normalization and
-                        database management systems.
-                    </p>
-
-                    <div class="course-info">
-                        <span>⭐ 4.8</span>
-                        <span>📚 24 Lessons</span>
-                    </div>
-
-                    <button onclick="enrollCourse('Database Management')">
-                        Enroll Now
-                    </button>
-                </div>
-
-            </div>
-
-
-            <!-- Course 5 -->
-            <div class="course-card" data-course="cyber security">
-
-                <div class="course-icon">🔐</div>
-
-                <div class="course-content">
-                    <span class="category">Cybersecurity</span>
-
-                    <h3>Cyber Security Basics</h3>
-
-                    <p>
-                        Learn cybersecurity fundamentals, threats,
-                        security techniques and best practices.
-                    </p>
-
-                    <div class="course-info">
-                        <span>⭐ 4.6</span>
-                        <span>📚 22 Lessons</span>
-                    </div>
-
-                    <button onclick="enrollCourse('Cyber Security Basics')">
-                        Enroll Now
-                    </button>
-                </div>
-
-            </div>
-
-
-            <!-- Course 6 -->
-            <div class="course-card" data-course="artificial intelligence">
-
-                <div class="course-icon">🤖</div>
-
-                <div class="course-content">
-                    <span class="category">Artificial Intelligence</span>
-
-                    <h3>Artificial Intelligence</h3>
-
-                    <p>
-                        Explore AI concepts, machine learning,
-                        intelligent systems and real-world applications.
-                    </p>
-
-                    <div class="course-info">
-                        <span>⭐ 4.9</span>
-                        <span>📚 32 Lessons</span>
-                    </div>
-
-                    <button onclick="enrollCourse('Artificial Intelligence')">
-                        Enroll Now
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="view-more">
-            <button onclick="showAllCourses()">
-                View All Courses →
+        <div class="sidebar-bottom">
+
+            <button class="logout-btn" onclick="logoutUser()">
+                <span>🚪</span>
+                <span>Logout</span>
             </button>
-        </div>
-
-    </section>
-
-
-    <!-- ================= FEATURES ================= -->
-    <section class="features-section" id="features">
-
-        <div class="section-title">
-            <p>WHY LEARN WITH US?</p>
-            <h2>Everything You Need to Learn</h2>
-        </div>
-
-        <div class="features-container">
-
-            <div class="feature-card">
-                <div class="feature-icon">🎓</div>
-                <h3>Expert Courses</h3>
-                <p>
-                    Learn from well-structured courses designed
-                    for students and beginners.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📈</div>
-                <h3>Track Progress</h3>
-                <p>
-                    Monitor your learning progress and complete
-                    courses step by step.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📝</div>
-                <h3>Online Quizzes</h3>
-                <p>
-                    Test your knowledge with interactive quizzes
-                    and assessments.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>Learn Anywhere</h3>
-                <p>
-                    Access your learning materials from mobile,
-                    tablet or desktop devices.
-                </p>
-            </div>
 
         </div>
 
-    </section>
+    </aside>
 
 
-    <!-- ================= STATISTICS ================= -->
-    <section class="stats-section">
+    <!-- MOBILE OVERLAY -->
 
-        <div class="stat">
-            <h2>50+</h2>
-            <p>Courses</p>
-        </div>
-
-        <div class="stat">
-            <h2>1000+</h2>
-            <p>Students</p>
-        </div>
-
-        <div class="stat">
-            <h2>50+</h2>
-            <p>Expert Instructors</p>
-        </div>
-
-        <div class="stat">
-            <h2>95%</h2>
-            <p>Student Satisfaction</p>
-        </div>
-
-    </section>
-
-
-    <!-- ================= ABOUT ================= -->
-    <section class="about-section" id="about">
-
-        <div class="about-image">
-            <img src="learn.jpg" alt="Students Learning">
-        </div>
-
-        <div class="about-content">
-
-            <p class="section-label">ABOUT LEARNHUB</p>
-
-            <h2>
-                Making Education Accessible for Everyone
-            </h2>
-
-            <p>
-                LearnHub is an e-learning platform developed to provide
-                students with easy access to educational resources,
-                courses and interactive learning tools.
-            </p>
-
-            <p>
-                Our platform helps learners develop technical skills,
-                monitor their progress and learn at their own pace.
-            </p>
-
-            <ul>
-                <li>✔ Easy-to-use learning interface</li>
-                <li>✔ Multiple technical courses</li>
-                <li>✔ Progress tracking</li>
-                <li>✔ Interactive quizzes</li>
-                <li>✔ Responsive design</li>
-            </ul>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= CTA ================= -->
-    <section class="cta-section">
-
-        <h2>Ready to Start Learning?</h2>
-
-        <p>
-            Join LearnHub today and take the next step toward
-            achieving your learning goals.
-        </p>
-
-        <button onclick="openSignup()">
-            Create Free Account
-        </button>
-
-    </section>
-
-
-    <!-- ================= CONTACT ================= -->
-    <section class="contact-section" id="contact">
-
-        <div class="section-title">
-            <p>GET IN TOUCH</p>
-            <h2>Contact Us</h2>
-        </div>
-
-        <div class="contact-container">
-
-            <div class="contact-info">
-
-                <h3>Contact Information</h3>
-
-                <p>📧 Email: support@learnhub.com</p>
-
-                <p>📞 Phone: +91 98765 43210</p>
-
-                <p>📍 Location: Gujarat, India</p>
-
-            </div>
-
-            <form id="contactForm" onsubmit="submitContact(event)">
-
-                <input
-                    type="text"
-                    id="contactName"
-                    placeholder="Your Name"
-                    required
-                >
-
-                <input
-                    type="email"
-                    id="contactEmail"
-                    placeholder="Your Email"
-                    required
-                >
-
-                <textarea
-                    id="contactMessage"
-                    rows="5"
-                    placeholder="Your Message"
-                    required
-                ></textarea>
-
-                <button type="submit">
-                    Send Message
-                </button>
-
-            </form>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= FOOTER ================= -->
-    <footer>
-
-        <div class="footer-content">
-
-            <div>
-                <h2>📚 LearnHub</h2>
-
-                <p>
-                    Your smart platform for online learning
-                    and skill development.
-                </p>
-            </div>
-
-            <div>
-                <h3>Quick Links</h3>
-
-                <a href="#home">Home</a>
-                <a href="#courses">Courses</a>
-                <a href="#features">Features</a>
-                <a href="#about">About</a>
-            </div>
-
-            <div>
-                <h3>Follow Us</h3>
-
-                <p>🌐 Website</p>
-                <p>📘 Facebook</p>
-                <p>📸 Instagram</p>
-                <p>💼 LinkedIn</p>
-            </div>
-
-        </div>
-
-        <div class="copyright">
-            <p>
-                © 2026 LearnHub E-Learning Platform. All Rights Reserved.
-            </p>
-        </div>
-
-    </footer>
-
-
-    <!-- ================= LOGIN MODAL ================= -->
-    <div class="modal" id="loginModal">
-
-        <div class="modal-content">
-
-            <span class="close" onclick="closeLogin()">&times;</span>
-
-            <h2>Welcome Back!</h2>
-
-            <p>Login to continue your learning journey.</p>
-
-            <form onsubmit="loginUser(event)">
-
-                <input
-                    type="email"
-                    id="loginEmail"
-                    placeholder="Email Address"
-                    required
-                >
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Password"
-                    required
-                >
-
-                <button type="submit">
-                    Login
-                </button>
-
-            </form>
-
-            <p>
-                Don't have an account?
-                <a href="#" onclick="switchToSignup()">Sign Up</a>
-            </p>
-
-        </div>
-
+    <div class="sidebar-overlay"
+         id="sidebarOverlay"
+         onclick="closeSidebar()">
     </div>
 
 
-    <!-- ================= SIGNUP MODAL ================= -->
-    <div class="modal" id="signupModal">
+    <!-- ================= MAIN CONTENT ================= -->
 
-        <div class="modal-content">
+    <main class="main-content">
 
-            <span class="close" onclick="closeSignup()">&times;</span>
+        <!-- HEADER -->
 
-            <h2>Create Account</h2>
+        <header class="top-header">
 
-            <p>Start your learning journey today.</p>
+            <button class="menu-toggle"
+                    id="menuToggle"
+                    onclick="toggleSidebar()">
+                ☰
+            </button>
 
-            <form onsubmit="registerUser(event)">
+            <div class="header-search">
+
+                <span>🔍</span>
 
                 <input
                     type="text"
-                    id="signupName"
-                    placeholder="Full Name"
-                    required
+                    id="globalSearch"
+                    placeholder="Search courses..."
+                    onkeyup="searchDashboardCourses()"
                 >
 
-                <input
-                    type="email"
-                    id="signupEmail"
-                    placeholder="Email Address"
-                    required
-                >
+            </div>
 
-                <input
-                    type="password"
-                    id="signupPassword"
-                    placeholder="Create Password"
-                    required
-                >
+            <div class="header-actions">
 
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="Confirm Password"
-                    required
-                >
-
-                <button type="submit">
-                    Create Account
+                <button class="notification-btn"
+                        onclick="showNotifications()">
+                    🔔
+                    <span class="notification-dot"></span>
                 </button>
 
-            </form>
+                <div class="header-profile">
 
-            <p>
-                Already have an account?
-                <a href="#" onclick="switchToLogin()">Login</a>
-            </p>
+                    <div class="profile-avatar small">
+                        👨‍🎓
+                    </div>
 
-        </div>
+                    <div>
+                        <strong id="headerUserName">
+                            Student
+                        </strong>
 
-    </div>
+                        <small>
+                            Learner
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
 
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+        <!-- ================= DASHBOARD ================= -->
 
-</body>
-                    </html>
+        <section class="content-section active-section"
+                 id="dashboard">
+
+            <div class="welcome-banner">
+
+                <div class="welcome-text">
+
+                    <span class="section-label">
+                        LEARNING DASHBOARD
+                    </span>
+
+                    <h1>
+                        Welcome back,
+                        <span id="welcomeUserName">
+                            Student
+                        </span>! 👋
+                    </h1>
+
+                    <p>
+                        Continue your learning journey and
+                        achieve your goals today.
+                    </p>
+
+                    <button class="primary-btn"
+                            onclick="showSectionById('explore')">
+                        Explore Courses →
+                    </button>
+
+                </div>
+
+                <div class="welcome-image">
+
+                    <img src="learn.jpg"
+                         alt="Online Learning">
+
+                </div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="dashboard-stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📚
+                    </div>
+
+                    <div>
+                        <h3 id="totalCourses">6</h3>
+                        <p>Available Courses</p>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        🎯
+                    </div>
+
+                    <div>
+                        <h3 id="enrolledCourses">0</h3>
+                        <p>Enrolled Courses</p>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        📈
+                    </div>
+
+                    <div>
+                        <h3 id="overallProgress">0%</h3>
+                        <p>Overall Progress</p>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        🏆
+                    </div>
+
+                    <div>
+                        <h3 id="completedCourses">0</h3>
+                        <p>Completed</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTINUE LEARNING -->
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">
+                        KEEP LEARNING
+                    </span>
+
+                    <h2>Continue Learning</h2>
+                </div>
+
+                <button class="text-btn"
+                        onclick="showSectionById('courses')">
+                    View All →
+                </button>
+
+            </div>
+
+
+            <div class="course-grid"
+                 id="dashboardCourseGrid">
+
+                <!-- Course Card -->
+
+                <article class="learning-card"
+                         data-course="full stack web development">
+
+                    <div class="course-image web">
+                        💻
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Web Development
+                        </span>
+
+                        <h3>
+                            Full Stack Web Development
+                        </h3>
+
+                        <p>
+                            Learn HTML, CSS, JavaScript and
+                            modern web technologies.
+                        </p>
+
+                        <div class="progress-info">
+
+                            <span>Progress</span>
+                            <strong>75%</strong>
+
+                        </div>
+
+                        <div class="progress-bar">
+                            <div style="width:75%"></div>
+                        </div>
+
+                        <button
+                            onclick="continueCourse('Full Stack Web Development')">
+                            Continue Course
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article class="learning-card"
+                         data-course="python programming">
+
+                    <div class="course-image python">
+                        🐍
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Programming
+                        </span>
+
+                        <h3>
+                            Python Programming
+                        </h3>
+
+                        <p>
+                            Master Python programming from
+                            basic to advanced concepts.
+                        </p>
+
+                        <div class="progress-info">
+
+                            <span>Progress</span>
+                            <strong>50%</strong>
+
+                        </div>
+
+                        <div class="progress-bar">
+                            <div style="width:50%"></div>
+                        </div>
+
+                        <button
+                            onclick="continueCourse('Python Programming')">
+                            Continue Course
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article class="learning-card"
+                         data-course="data science">
+
+                    <div class="course-image data">
+                        📊
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Data Science
+                        </span>
+
+                        <h3>
+                            Data Science Fundamentals
+                        </h3>
+
+                        <p>
+                            Learn data analysis, visualization
+                            and data science fundamentals.
+                        </p>
+
+                        <div class="progress-info">
+
+                            <span>Progress</span>
+                            <strong>30%</strong>
+
+                        </div>
+
+                        <div class="progress-bar">
+                            <div style="width:30%"></div>
+                        </div>
+
+                        <button
+                            onclick="continueCourse('Data Science Fundamentals')">
+                            Continue Course
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MY COURSES ================= -->
+
+        <section class="content-section" id="courses">
+
+            <div class="page-header">
+
+                <div>
+                    <span class="section-label">
+                        MY LEARNING
+                    </span>
+
+                    <h1>My Courses</h1>
+
+                    <p>
+                        Courses you have enrolled in.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="course-grid" id="myCoursesGrid">
+
+                <article class="learning-card">
+
+                    <div class="course-image web">
+                        💻
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Web Development
+                        </span>
+
+                        <h3>
+                            Full Stack Web Development
+                        </h3>
+
+                        <div class="progress-info">
+                            <span>Progress</span>
+                            <strong>75%</strong>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div style="width:75%"></div>
+                        </div>
+
+                        <button onclick="continueCourse('Full Stack Web Development')">
+                            Continue
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <article class="learning-card">
+
+                    <div class="course-image python">
+                        🐍
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Programming
+                        </span>
+
+                        <h3>
+                            Python Programming
+                        </h3>
+
+                        <div class="progress-info">
+                            <span>Progress</span>
+                            <strong>50%</strong>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div style="width:50%"></div>
+                        </div>
+
+                        <button onclick="continueCourse('Python Programming')">
+                            Continue
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= EXPLORE ================= -->
+
+        <section class="content-section" id="explore">
+
+            <div class="page-header">
+
+                <div>
+
+                    <span class="section-label">
+                        DISCOVER
+                    </span>
+
+                    <h1>Explore Courses</h1>
+
+                    <p>
+                        Find the right course to improve your skills.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="course-search">
+
+                <span>🔍</span>
+
+                <input
+                    type="text"
+                    id="courseSearch"
+                    placeholder="Search courses by name or category..."
+                    onkeyup="filterCourses()"
+                >
+
+            </div>
+
+
+            <div class="course-grid"
+                 id="allCoursesGrid">
+
+                <!-- Course 1 -->
+
+                <article class="learning-card"
+                         data-search="web development full stack">
+
+                    <div class="course-image web">
+                        💻
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Web Development
+                        </span>
+
+                        <h3>
+                            Full Stack Web Development
+                        </h3>
+
+                        <p>
+                            HTML, CSS, JavaScript and modern
+                            web development.
+                        </p>
+
+                        <div class="course-meta">
+                            ⭐ 4.8 &nbsp; • &nbsp; 25 Lessons
+                        </div>
+
+                        <button onclick="enrollCourse('Full Stack Web Development')">
+                            Enroll Now
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Course 2 -->
+
+                <article class="learning-card"
+                         data-search="python programming">
+
+                    <div class="course-image python">
+                        🐍
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Programming
+                        </span>
+
+                        <h3>
+                            Python Programming
+                        </h3>
+
+                        <p>
+                            Learn Python programming with
+                            practical examples.
+                        </p>
+
+                        <div class="course-meta">
+                            ⭐ 4.9 &nbsp; • &nbsp; 30 Lessons
+                        </div>
+
+                        <button onclick="enrollCourse('Python Programming')">
+                            Enroll Now
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Course 3 -->
+
+                <article class="learning-card"
+                         data-search="data science">
+
+                    <div class="course-image data">
+                        📊
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Data Science
+                        </span>
+
+                        <h3>
+                            Data Science Fundamentals
+                        </h3>
+
+                        <p>
+                            Learn data analysis and
+                            visualization techniques.
+                        </p>
+
+                        <div class="course-meta">
+                            ⭐ 4.7 &nbsp; • &nbsp; 28 Lessons
+                        </div>
+
+                        <button onclick="enrollCourse('Data Science Fundamentals')">
+                            Enroll Now
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Course 4 -->
+
+                <article class="learning-card"
+                         data-search="database management sql">
+
+                    <div class="course-image database">
+                        🗄️
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Database
+                        </span>
+
+                        <h3>
+                            Database Management
+                        </h3>
+
+                        <p>
+                            Learn SQL, database design and
+                            normalization.
+                        </p>
+
+                        <div class="course-meta">
+                            ⭐ 4.8 &nbsp; • &nbsp; 24 Lessons
+                        </div>
+
+                        <button onclick="enrollCourse('Database Management')">
+                            Enroll Now
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Course 5 -->
+
+                <article class="learning-card"
+                         data-search="cyber security cybersecurity">
+
+                    <div class="course-image security">
+                        🔐
+                    </div>
+
+                    <div class="course-body">
+
+                        <span class="course-category">
+                            Cybersecurity
+                        </span>
+
+                        <h3>
+                            Cyber Security Basics
+                        </h3>
+
+                        <p>
+                            Learn cybersecurity concepts,
+                            threats and protection.
+                        </p>
+
+                        <div class="course-meta">
+                            ⭐ 4.6 &nbsp; • &nbsp; 22 Lessons
+                        </div>
+
+                        <button onclick="enrollCourse('Cyber Security Basics')">
+                            Enroll Now
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Course 6 -->
+
+                <article class="learning-card"
+                         data-search="artificial intelligence ai machine learning">
+
+                    <div class="course-image ai">
+                        🤖
+        

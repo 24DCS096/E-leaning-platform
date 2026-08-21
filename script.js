@@ -1,35 +1,34 @@
-/* =========================================================
+/* =====================================================
    LEARNHUB - E-LEARNING PLATFORM
    script.js
-   ========================================================= */
+   ===================================================== */
 
 
-/* ================= MOBILE NAVIGATION ================= */
+/* ================= PAGE LOAD ================= */
 
-function toggleMenu() {
-    const navbar = document.querySelector(".navbar");
+document.addEventListener("DOMContentLoaded", function () {
 
-    if (navbar) {
-        navbar.classList.toggle("mobile-active");
-    }
-}
+    console.log("LearnHub E-Learning Platform Loaded");
 
-
-/* Close mobile menu after clicking a link */
-
-document.querySelectorAll(".navbar a").forEach(function (link) {
-
-    link.addEventListener("click", function () {
-
-        const navbar = document.querySelector(".navbar");
-
-        if (navbar) {
-            navbar.classList.remove("mobile-active");
-        }
-
-    });
+    loadUserData();
+    updateNavigation();
 
 });
+
+
+/* ================= SMOOTH SCROLL ================= */
+
+function scrollToCourses() {
+
+    const courses = document.getElementById("courses");
+
+    if (courses) {
+        courses.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+}
 
 
 /* ================= LOGIN MODAL ================= */
@@ -39,10 +38,9 @@ function openLogin() {
     const loginModal = document.getElementById("loginModal");
 
     if (loginModal) {
-        loginModal.classList.add("active");
+        loginModal.style.display = "flex";
     }
 
-    closeSignup();
 }
 
 
@@ -51,7 +49,7 @@ function closeLogin() {
     const loginModal = document.getElementById("loginModal");
 
     if (loginModal) {
-        loginModal.classList.remove("active");
+        loginModal.style.display = "none";
     }
 
 }
@@ -64,10 +62,9 @@ function openSignup() {
     const signupModal = document.getElementById("signupModal");
 
     if (signupModal) {
-        signupModal.classList.add("active");
+        signupModal.style.display = "flex";
     }
 
-    closeLogin();
 }
 
 
@@ -76,7 +73,7 @@ function closeSignup() {
     const signupModal = document.getElementById("signupModal");
 
     if (signupModal) {
-        signupModal.classList.remove("active");
+        signupModal.style.display = "none";
     }
 
 }
@@ -100,7 +97,7 @@ function switchToLogin() {
 }
 
 
-/* ================= CLOSE MODAL ON OUTSIDE CLICK ================= */
+/* ================= CLOSE MODAL ================= */
 
 window.addEventListener("click", function (event) {
 
@@ -118,46 +115,9 @@ window.addEventListener("click", function (event) {
 });
 
 
-/* ================= LOGIN ================= */
+/* ================= SIGN UP ================= */
 
-function loginUser(event) {
-
-    event.preventDefault();
-
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value.trim();
-
-    if (email === "" || password === "") {
-
-        alert("Please enter email and password.");
-
-        return;
-    }
-
-    /*
-        Demo login system.
-
-        In a real project, authentication should be
-        handled by a backend and database.
-    */
-
-    localStorage.setItem("loggedIn", "true");
-    localStorage.setItem("userEmail", email);
-
-    alert("Login successful! Welcome to LearnHub.");
-
-    closeLogin();
-
-    document.getElementById("loginEmail").value = "";
-    document.getElementById("loginPassword").value = "";
-
-    updateLoginButton();
-}
-
-
-/* ================= SIGNUP ================= */
-
-function signupUser(event) {
+function registerUser(event) {
 
     event.preventDefault();
 
@@ -167,12 +127,14 @@ function signupUser(event) {
     const confirmPassword =
         document.getElementById("confirmPassword").value;
 
+
     if (name === "" || email === "" || password === "") {
 
         alert("Please fill all required fields.");
 
         return;
     }
+
 
     if (password.length < 6) {
 
@@ -181,6 +143,7 @@ function signupUser(event) {
         return;
     }
 
+
     if (password !== confirmPassword) {
 
         alert("Passwords do not match.");
@@ -188,27 +151,191 @@ function signupUser(event) {
         return;
     }
 
+
+    const existingUser =
+        JSON.parse(localStorage.getItem("learnHubUser"));
+
+
+    if (existingUser && existingUser.email === email) {
+
+        alert("An account with this email already exists.");
+
+        return;
+    }
+
+
     const user = {
+
         name: name,
         email: email,
-        password: password
+        password: password,
+        enrolledCourses: []
+
     };
 
-    localStorage.setItem("learnHubUser", JSON.stringify(user));
 
-    alert(
-        "Account created successfully!\n\n" +
-        "Welcome to LearnHub, " + name + "!"
+    localStorage.setItem(
+        "learnHubUser",
+        JSON.stringify(user)
     );
 
-    closeSignup();
+
+    alert(
+        "Account created successfully! You can now login."
+    );
+
 
     document.getElementById("signupName").value = "";
     document.getElementById("signupEmail").value = "";
     document.getElementById("signupPassword").value = "";
     document.getElementById("confirmPassword").value = "";
 
+
+    closeSignup();
+
     openLogin();
+
+}
+
+
+/* ================= LOGIN ================= */
+
+function loginUser(event) {
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+
+    const user =
+        JSON.parse(localStorage.getItem("learnHubUser"));
+
+
+    if (!user) {
+
+        alert(
+            "No account found. Please create an account first."
+        );
+
+        return;
+    }
+
+
+    if (email === user.email && password === user.password) {
+
+        localStorage.setItem(
+            "learnHubLoggedIn",
+            "true"
+        );
+
+
+        localStorage.setItem(
+            "learnHubCurrentUser",
+            JSON.stringify(user)
+        );
+
+
+        alert(
+            "Login successful! Welcome to LearnHub, " +
+            user.name + "."
+        );
+
+
+        document.getElementById("loginEmail").value = "";
+        document.getElementById("loginPassword").value = "";
+
+
+        closeLogin();
+
+        updateNavigation();
+
+    }
+
+    else {
+
+        alert(
+            "Invalid email or password."
+        );
+
+    }
+
+}
+
+
+/* ================= LOAD USER ================= */
+
+function loadUserData() {
+
+    const user =
+        JSON.parse(localStorage.getItem("learnHubUser"));
+
+
+    if (!user) {
+
+        console.log("No registered user found.");
+
+        return;
+    }
+
+
+    console.log(
+        "User loaded:",
+        user.name
+    );
+
+}
+
+
+/* ================= NAVIGATION UPDATE ================= */
+
+function updateNavigation() {
+
+    const loggedIn =
+        localStorage.getItem("learnHubLoggedIn");
+
+    const navButtons =
+        document.querySelector(".nav-buttons");
+
+
+    if (!navButtons) {
+        return;
+    }
+
+
+    if (loggedIn === "true") {
+
+        const user =
+            JSON.parse(
+                localStorage.getItem("learnHubCurrentUser")
+            );
+
+
+        navButtons.innerHTML = `
+
+            <span style="
+                display:flex;
+                align-items:center;
+                padding:10px;
+                color:#2563eb;
+                font-weight:600;
+            ">
+                👤 ${user ? user.name : "Student"}
+            </span>
+
+            <button
+                class="signup-btn"
+                onclick="logoutUser()">
+                Logout
+            </button>
+
+        `;
+
+    }
+
 }
 
 
@@ -216,52 +343,16 @@ function signupUser(event) {
 
 function logoutUser() {
 
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("userEmail");
-
-    alert("You have been logged out.");
-
-    updateLoginButton();
-}
+    localStorage.removeItem("learnHubLoggedIn");
+    localStorage.removeItem("learnHubCurrentUser");
 
 
-/* ================= UPDATE LOGIN BUTTON ================= */
+    alert(
+        "You have been logged out successfully."
+    );
 
-function updateLoginButton() {
 
-    const buttons = document.querySelectorAll(".nav-buttons");
-
-    const loggedIn = localStorage.getItem("loggedIn");
-
-    buttons.forEach(function (container) {
-
-        if (loggedIn === "true") {
-
-            container.innerHTML = `
-                <button class="btn btn-outline" onclick="logoutUser()">
-                    Logout
-                </button>
-
-                <button class="btn btn-primary" onclick="showDashboard()">
-                    Dashboard
-                </button>
-            `;
-
-        } else {
-
-            container.innerHTML = `
-                <button class="btn btn-outline" onclick="openLogin()">
-                    Login
-                </button>
-
-                <button class="btn btn-primary" onclick="openSignup()">
-                    Sign Up
-                </button>
-            `;
-
-        }
-
-    });
+    location.reload();
 
 }
 
@@ -270,123 +361,88 @@ function updateLoginButton() {
 
 function searchCourses() {
 
-    const input =
+    const searchInput =
         document.getElementById("courseSearch");
 
-    if (!input) {
-        return;
-    }
 
-    const searchText =
-        input.value.toLowerCase().trim();
+    const searchValue =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
 
     const courses =
         document.querySelectorAll(".course-card");
 
-    let found = false;
+
+    let foundCourses = 0;
+
 
     courses.forEach(function (course) {
 
         const courseText =
-            course.textContent.toLowerCase();
+            course.innerText.toLowerCase();
 
-        if (courseText.includes(searchText)) {
 
-            course.classList.remove("hidden");
+        const courseData =
+            course.getAttribute("data-course");
 
-            found = true;
 
-        } else {
+        if (
+            courseText.includes(searchValue) ||
+            (courseData &&
+             courseData.toLowerCase().includes(searchValue))
+        ) {
 
-            course.classList.add("hidden");
+            course.style.display = "block";
+
+            foundCourses++;
+
+        }
+
+        else {
+
+            course.style.display = "none";
 
         }
 
     });
 
+
     let noResults =
         document.querySelector(".no-results");
 
-    if (!noResults) {
 
-        noResults =
-            document.createElement("div");
+    if (foundCourses === 0) {
 
-        noResults.className = "no-results";
+        if (!noResults) {
 
-        noResults.textContent =
-            "No courses found. Try another search.";
+            noResults =
+                document.createElement("div");
 
-        const courseGrid =
-            document.getElementById("courseGrid");
+            noResults.className =
+                "no-results";
 
-        if (courseGrid) {
-            courseGrid.appendChild(noResults);
+            noResults.innerHTML =
+                "😔 No courses found. Try another search.";
+
+            document
+                .getElementById("courseContainer")
+                .appendChild(noResults);
+
         }
 
     }
 
-    if (searchText !== "" && !found) {
+    else {
 
-        noResults.style.display = "block";
+        if (noResults) {
 
-    } else {
+            noResults.remove();
 
-        noResults.style.display = "none";
-
-    }
-
-}
-
-
-/* ================= COURSE ENROLLMENT ================= */
-
-function enrollCourse(courseName) {
-
-    const loggedIn =
-        localStorage.getItem("loggedIn");
-
-    if (loggedIn !== "true") {
-
-        const confirmLogin = confirm(
-            "Please login before enrolling in a course.\n\n" +
-            "Would you like to login now?"
-        );
-
-        if (confirmLogin) {
-            openLogin();
         }
 
-        return;
     }
-
-    let enrolledCourses =
-        JSON.parse(
-            localStorage.getItem("enrolledCourses")
-        ) || [];
-
-    if (enrolledCourses.includes(courseName)) {
-
-        alert(
-            "You are already enrolled in " +
-            courseName + "."
-        );
-
-        return;
-    }
-
-    enrolledCourses.push(courseName);
-
-    localStorage.setItem(
-        "enrolledCourses",
-        JSON.stringify(enrolledCourses)
-    );
-
-    alert(
-        "🎉 Enrollment Successful!\n\n" +
-        "Course: " + courseName +
-        "\n\nYou can start learning now."
-    );
 
 }
 
@@ -398,39 +454,111 @@ function showAllCourses() {
     const courses =
         document.querySelectorAll(".course-card");
 
+
     courses.forEach(function (course) {
-        course.classList.remove("hidden");
+
+        course.style.display = "block";
+
     });
+
 
     const noResults =
         document.querySelector(".no-results");
 
+
     if (noResults) {
-        noResults.style.display = "none";
+
+        noResults.remove();
+
     }
 
-    const search =
+
+    const searchInput =
         document.getElementById("courseSearch");
 
-    if (search) {
-        search.value = "";
-    }
 
-    document.getElementById("courses").scrollIntoView({
-        behavior: "smooth"
-    });
+    if (searchInput) {
+
+        searchInput.value = "";
+
+    }
 
 }
 
 
-/* ================= DEMO BUTTON ================= */
+/* ================= COURSE ENROLLMENT ================= */
 
-function showDemo() {
+function enrollCourse(courseName) {
+
+    const loggedIn =
+        localStorage.getItem("learnHubLoggedIn");
+
+
+    if (loggedIn !== "true") {
+
+        alert(
+            "Please login or create an account before enrolling."
+        );
+
+
+        openLogin();
+
+        return;
+    }
+
+
+    const user =
+        JSON.parse(
+            localStorage.getItem("learnHubCurrentUser")
+        );
+
+
+    if (!user) {
+
+        alert(
+            "User information could not be found."
+        );
+
+        return;
+    }
+
+
+    if (!user.enrolledCourses) {
+
+        user.enrolledCourses = [];
+
+    }
+
+
+    if (user.enrolledCourses.includes(courseName)) {
+
+        alert(
+            "You are already enrolled in " +
+            courseName + "."
+        );
+
+        return;
+    }
+
+
+    user.enrolledCourses.push(courseName);
+
+
+    localStorage.setItem(
+        "learnHubCurrentUser",
+        JSON.stringify(user)
+    );
+
+
+    localStorage.setItem(
+        "learnHubUser",
+        JSON.stringify(user)
+    );
+
 
     alert(
-        "🎓 Welcome to LearnHub!\n\n" +
-        "This demo introduces you to our online learning platform.\n\n" +
-        "Explore courses, enroll, track your progress and learn new skills."
+        "🎉 Successfully enrolled in " +
+        courseName + "!"
     );
 
 }
@@ -442,205 +570,146 @@ function submitContact(event) {
 
     event.preventDefault();
 
+
     const name =
-        document.getElementById("name").value.trim();
+        document.getElementById("contactName").value.trim();
 
     const email =
-        document.getElementById("email").value.trim();
-
-    const subject =
-        document.getElementById("subject").value.trim();
+        document.getElementById("contactEmail").value.trim();
 
     const message =
-        document.getElementById("message").value.trim();
+        document.getElementById("contactMessage").value.trim();
 
-    if (!name || !email || !subject || !message) {
 
-        alert("Please fill all fields.");
+    if (
+        name === "" ||
+        email === "" ||
+        message === ""
+    ) {
+
+        alert(
+            "Please fill all contact form fields."
+        );
 
         return;
     }
 
-    /*
-        Store contact messages locally for demonstration.
-    */
-
-    const contactMessage = {
-
-        name: name,
-        email: email,
-        subject: subject,
-        message: message,
-        date: new Date().toLocaleString()
-
-    };
-
-    let messages =
-        JSON.parse(
-            localStorage.getItem("contactMessages")
-        ) || [];
-
-    messages.push(contactMessage);
-
-    localStorage.setItem(
-        "contactMessages",
-        JSON.stringify(messages)
-    );
 
     alert(
-        "Thank you, " + name + "!\n\n" +
-        "Your message has been submitted successfully."
+        "Thank you, " +
+        name +
+        "! Your message has been submitted successfully."
     );
 
-    document.querySelector(".contact-form").reset();
+
+    document.getElementById("contactForm").reset();
 
 }
 
 
-/* ================= DASHBOARD ================= */
+/* ================= EMAIL VALIDATION ================= */
 
-function showDashboard() {
+function validateEmail(email) {
+
+    const pattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    return pattern.test(email);
+
+}
+
+
+/* ================= PASSWORD VISIBILITY ================= */
+
+function togglePassword(inputId) {
+
+    const input =
+        document.getElementById(inputId);
+
+
+    if (!input) {
+        return;
+    }
+
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+    }
+
+    else {
+
+        input.type = "password";
+
+    }
+
+}
+
+
+/* ================= WELCOME MESSAGE ================= */
+
+function showWelcomeMessage() {
+
+    const loggedIn =
+        localStorage.getItem("learnHubLoggedIn");
+
+
+    if (loggedIn !== "true") {
+        return;
+    }
+
 
     const user =
         JSON.parse(
-            localStorage.getItem("learnHubUser")
+            localStorage.getItem("learnHubCurrentUser")
         );
 
-    const enrolledCourses =
-        JSON.parse(
-            localStorage.getItem("enrolledCourses")
-        ) || [];
 
-    if (!user) {
+    if (user) {
 
-        alert("Please login first.");
-
-        openLogin();
-
-        return;
-    }
-
-    let courseList = "";
-
-    if (enrolledCourses.length === 0) {
-
-        courseList =
-            "No courses enrolled yet.";
-
-    } else {
-
-        courseList =
-            enrolledCourses
-                .map(function (course, index) {
-                    return (
-                        (index + 1) +
-                        ". " +
-                        course
-                    );
-                })
-                .join("\n");
+        console.log(
+            "Welcome back, " + user.name + "!"
+        );
 
     }
-
-    alert(
-        "👨‍🎓 STUDENT DASHBOARD\n\n" +
-        "Name: " + user.name +
-        "\nEmail: " + user.email +
-        "\n\nMy Courses:\n" +
-        courseList
-    );
 
 }
 
 
-/* ================= NAVIGATION ACTIVE LINK ================= */
-
-window.addEventListener("scroll", function () {
-
-    const sections =
-        document.querySelectorAll("section[id]");
-
-    const navLinks =
-        document.querySelectorAll(".navbar a");
-
-    let currentSection = "";
-
-    sections.forEach(function (section) {
-
-        const sectionTop =
-            section.offsetTop - 100;
-
-        if (window.scrollY >= sectionTop) {
-
-            currentSection =
-                section.getAttribute("id");
-
-        }
-
-    });
-
-    navLinks.forEach(function (link) {
-
-        link.style.color = "";
-
-        if (
-            link.getAttribute("href") ===
-            "#" + currentSection
-        ) {
-
-            link.style.color = "#2563eb";
-
-        }
-
-    });
-
-});
-
-
-/* ================= PAGE LOAD ================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    updateLoginButton();
-
-    /*
-        Add smooth behavior to internal links.
-    */
-
-    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-
-        link.addEventListener("click", function (event) {
-
-            const targetId =
-                this.getAttribute("href");
-
-            if (targetId === "#") {
-                return;
-            }
-
-            const target =
-                document.querySelector(targetId);
-
-            if (target) {
-
-                event.preventDefault();
-
-                target.scrollIntoView({
-                    behavior: "smooth"
-                });
-
-            }
-
-        });
-
-    });
-
-});
-
-
-/* ================= KEYBOARD ESCAPE ================= */
+/* ================= KEYBOARD SHORTCUT ================= */
 
 document.addEventListener("keydown", function (event) {
+
+    /*
+       Press "/" to focus the course search box.
+    */
+
+    if (
+        event.key === "/" &&
+        document.activeElement.tagName !== "INPUT" &&
+        document.activeElement.tagName !== "TEXTAREA"
+    ) {
+
+        event.preventDefault();
+
+        const search =
+            document.getElementById("courseSearch");
+
+
+        if (search) {
+
+            search.focus();
+
+        }
+
+    }
+
+
+    /*
+       Press Escape to close modals.
+    */
 
     if (event.key === "Escape") {
 
@@ -650,3 +719,12 @@ document.addEventListener("keydown", function (event) {
     }
 
 });
+
+
+/* ================= INITIALIZATION ================= */
+
+showWelcomeMessage();
+
+console.log(
+    "LearnHub JavaScript initialized successfully."
+);

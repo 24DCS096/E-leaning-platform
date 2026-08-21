@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="E-Learning Platform - Learn anytime, anywhere">
+    <title>LearnHub - E-Learning Platform</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <div class="container nav-container">
+
+            <div class="logo">
+                <span>🎓</span> LearnHub
+            </div>
+
+            <nav class="navbar">
+                <a href="#home">Home</a>
+                <a href="#courses">Courses</a>
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="nav-buttons">
+                <button class="btn btn-outline" onclick="openLogin()">
+                    Login
+                </button>
+
+                <button class="btn btn-primary" onclick="openSignup()">
+                    Sign Up
+                </button>
+            </div>
+
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+    </header>
+
+
+    <!-- ================= HERO SECTION ================= -->
+    <section id="home" class="hero">
+
+        <div class="container hero-content">
+
+            <div class="hero-text">
+
+                <span class="hero-tag">
+                    🚀 Learn. Grow. Succeed.
+                </span>
+
+                <h1>
+                    Learn New Skills
+                    <span>Anytime, Anywhere</span>
+                </h1>
+
+                <p>
+                    Welcome to LearnHub, an interactive e-learning platform
+                    where you can learn programming, technology, business and
+                    many other useful skills from anywhere.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#courses" class="btn btn-primary">
+                        Explore Courses
+                    </a>
+
+                    <button class="btn btn-secondary" onclick="showDemo()">
+                        ▶ Watch Demo
+                    </button>
+                </div>
+
+                <div class="hero-stats">
+                    <div>
+                        <strong>50+</strong>
+                        <span>Courses</span>
+                    </div>
+
+                    <div>
+                        <strong>1K+</strong>
+                        <span>Students</span>
+                    </div>
+
+                    <div>
+                        <strong>20+</strong>
+                        <span>Instructors</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="hero-image">
+                <img src="learn.jpg" alt="Online Learning">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SEARCH SECTION ================= -->
+    <section class="search-section">
+
+        <div class="container">
+
+            <h2>Find Your Perfect Course</h2>
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="courseSearch"
+                    placeholder="Search for courses..."
+                    onkeyup="searchCourses()"
+                >
+
+                <button onclick="searchCourses()">
+                    🔍 Search
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= COURSES SECTION ================= -->
+    <section id="courses" class="courses-section">
+
+        <div class="container">
+
+            <div class="section-title">
+                <span>POPULAR COURSES</span>
+
+                <h2>Explore Our Courses</h2>
+
+                <p>
+                    Choose from our wide range of courses and start
+                    learning new skills today.
+                </p>
+            </div>
+
+
+            <div class="course-grid" id="courseGrid">
+
+                <!-- Course 1 -->
+                <div class="course-card">
+
+                    <div class="course-image">
+                        <div class="course-icon">💻</div>
+                        <span class="level">Beginner</span>
+                    </div>
+
+                    <div class="course-content">
+
+                        <span class="category">
+                            Web Development
+                        </span>
+
+                        <h3>Complete HTML & CSS</h3>
+
+                        <p>
+                            Learn the fundamentals of HTML and CSS
+                            and create modern websites.
+                        </p>
+
+                        <div class="course-info">
+                            <span>📚 25 Lessons</span>
+                            <span>⏱ 8 Hours</span>
+                        </div>
+
+                        <div class="course-footer">
+                            <strong>Free</strong>
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="enrollCourse('Complete HTML & CSS')">
+                                Enroll
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Course 2 -->
+                <div class="course-card">
+
+                    <div class="course-image python">
+                        <div class="course-icon">🐍</div>
+                        <span class="level">Beginner</span>
+                    </div>
+
+                    <div class="course-content">
+
+                        <span class="category">
+                            Programming
+                        </span>
+
+                        <h3>Python Programming</h3>
+
+                        <p>
+                            Learn Python programming from basics
+                            to advanced concepts.
+                        </p>
+
+                        <div class="course-info">
+                            <span>📚 40 Lessons</span>
+                            <span>⏱ 15 Hours</span>
+                        </div>
+
+                        <div class="course-footer">
+                            <strong>Free</strong>
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="enrollCourse('Python Programming')">
+                                Enroll
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Course 3 -->
+                <div class="course-card">
+
+                    <div class="course-image java">
+                        <div class="course-icon">☕</div>
+                        <span class="level">Intermediate</span>
+                    </div>
+
+                    <div class="course-content">
+
+                        <span class="category">
+                            Programming
+                        </span>
+
+                        <h3>Java Programming</h3>
+
+                        <p>
+                            Understand Java programming, OOP concepts
+                            and application development.
+                        </p>
+
+                        <div class="course-info">
+                            <span>📚 35 Lessons</span>
+                            <span>⏱ 14 Hours</span>
+                        </div>
+
+                        <div class="course-footer">
+                            <strong>₹499</strong>
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="enrollCourse('Java Programming')">
+                                Enroll
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Course 4 -->
+                <div class="course-card">
+
+                    <div class="course-image database">
+                        <div class="course-icon">🗄️</div>
+                        <span class="level">Intermediate</span>
+                    </div>
+
+                    <div class="course-content">
+
+                        <span class="category">
+                            Database
+                        </span>
+
+                        <h3>Database Management</h3>
+
+                        <p>
+                            Learn SQL, database design, queries,
+                            joins and normalization.
+                        </p>
+
+                        <div class="course-info">
+                            <span>📚 30 Lessons</span>
+                            <span>⏱ 12 Hours</span>
+                        </div>
+
+                        <div class="course-footer">
+                            <strong>₹399</strong>
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="enrollCourse('Database Management')">
+                                Enroll
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Course 5 -->
+                <div class="course-card">
+
+                    <div class="course-image cpp">
+                        <div class="course-icon">⚙️</div>
+                        <span class="level">Intermediate</span>
+                    </div>
+
+                    <div class="course-content">
+
+                        <span class="category">
+                            Programming
+                        </span>
+
+                        <h3>C++ Programming</h3>
+
+                        <p>
+                            Master C++ programming and object-oriented
+                            programming concepts.
+                        </p>
+
+                        <div class="course-info">
+                            <span>📚 32 Lessons</span>
+                            <span>⏱ 13 Hours</span>
+                        </div>
+
+                        <div class="course-footer">
+                            <strong>₹399</strong>
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="enrollCourse('C++ Programming')">
+                                Enroll
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Course 6 -->
+                <div class="course-card">
+
+                    <div class="course-image javascript">
+                        <div class="course-icon">⚡</div>
+                        <span class="level">Intermediate</span>
+                    </div>
+
+                    <div class="course-content">
+
+                        <span class="category">
+                            Web Development
+                        </span>
+
+                        <h3>JavaScript Masterclass</h3>
+
+                        <p>
+                            Build interactive websites using modern
+                            JavaScript concepts.
+                        </p>
+
+                        <div class="course-info">
+                            <span>📚 38 Lessons</span>
+                            <span>⏱ 16 Hours</span>
+                        </div>
+
+                        <div class="course-footer">
+                            <strong>₹599</strong>
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="enrollCourse('JavaScript Masterclass')">
+                                Enroll
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="view-all">
+                <button class="btn btn-outline" onclick="showAllCourses()">
+                    View All Courses →
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FEATURES ================= -->
+    <section id="features" class="features-section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <span>WHY LEARNHUB?</span>
+
+                <h2>Learn Better, Learn Smarter</h2>
+
+                <p>
+                    Everything you need to improve your knowledge
+                    and build your career.
+                </p>
+
+            </div>
+
+
+            <div class="features-grid">
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎥</div>
+                    <h3>Video Lessons</h3>
+                    <p>
+                        Learn through high-quality video lessons
+                        created by experienced instructors.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Learn Anywhere</h3>
+                    <p>
+                        Access your courses from mobile, tablet
+                        or computer anytime.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Track Progress</h3>
+                    <p>
+                        Track your course progress and monitor
+                        your learning performance.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Certificates</h3>
+                    <p>
+                        Complete courses and earn certificates
+                        to showcase your achievements.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="about-section">
+
+        <div class="container about-content">
+
+            <div class="about-image">
+                <img src="learn.jpg" alt="Students Learning">
+            </div>
+
+            <div class="about-text">
+
+                <span>ABOUT LEARNHUB</span>
+
+                <h2>
+                    Education Made Simple and Accessible
+                </h2>
+
+                <p>
+                    LearnHub is an online learning platform designed
+                    to help students develop technical and professional
+                    skills through interactive courses.
+                </p>
+
+                <p>
+                    Our platform provides structured lessons, quizzes,
+                    progress tracking and learning resources to make
+                    online education simple and effective.
+                </p>
+
+                <ul>
+                    <li>✓ Expert-created courses</li>
+                    <li>✓ Interactive learning</li>
+                    <li>✓ Progress tracking</li>
+                    <li>✓ Flexible learning schedule</li>
+                </ul>
+
+                <a href="#courses" class="btn btn-primary">
+                    Start Learning
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CTA ================= -->
+    <section class="cta-section">
+
+        <div class="container">
+
+            <h2>Ready to Start Learning?</h2>
+
+            <p>
+                Join thousands of students and start building
+                your skills today.
+            </p>
+
+            <button class="btn btn-primary" onclick="openSignup()">
+                Create Free Account
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="contact-section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <span>GET IN TOUCH</span>
+
+                <h2>Contact Us</h2>
+
+                <p>
+                    Have questions? We would love to hear from you.
+                </p>
+
+            </div>
+
+
+            <form class="contact-form" onsubmit="submitContact(event)">
+
+                <div class="form-row">
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Your Name"
+                        required
+                    >
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Your Email"
+                        required
+                    >
+
+                </div>
+
+                <input
+                    type="text"
+                    id="subject"
+                    placeholder="Subject"
+                    required
+                >
+
+                <textarea
+                    id="message"
+                    rows="5"
+                    placeholder="Your Message"
+                    required
+                ></textarea>
+
+                <button type="submit" class="btn btn-primary">
+                    Send Message
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div class="footer-about">
+
+                <div class="logo">
+                    <span>🎓</span> LearnHub
+                </div>
+
+                <p>
+                    Learn new skills, improve your knowledge and
+                    build your future with LearnHub.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>Quick Links</h3>
+
+                <a href="#home">Home</a>
+                <a href="#courses">Courses</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>Categories</h3>
+
+                <a href="#courses">Programming</a>
+                <a href="#courses">Web Development</a>
+                <a href="#courses">Database</a>
+                <a href="#courses">Technology</a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>Follow Us</h3>
+
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">YouTube</a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 LearnHub. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= LOGIN MODAL ================= -->
+    <div id="loginModal" class="modal">
+
+        <div class="modal-content">
+
+            <button class="close-btn" onclick="closeLogin()">×</button>
+
+            <h2>Welcome Back!</h2>
+
+            <p>Login to continue learning.</p>
+
+            <form onsubmit="loginUser(event)">
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Email Address"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Password"
+                    required
+                >
+
+                <button type="submit" class="btn btn-primary">
+                    Login
+                </button>
+
+            </form>
+
+            <p>
+                Don't have an account?
+                <a href="#" onclick="switchToSignup()">Sign Up</a>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SIGNUP MODAL ================= -->
+    <div id="signupModal" class="modal">
